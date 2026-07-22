@@ -1,0 +1,26 @@
+name: Daily Auto Commit
+
+on:
+  schedule:
+    # รันอัตโนมัติทุกวัน ตอนเที่ยงคืน UTC (07:00 น. เวลาไทย)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # ปุ่มกดรันเองมือถือ/เว็บบราวเซอร์
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Update streak file
+        run: |
+          echo "Last active: $(date)" > streak.txt
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "zeetosit@gmail.com"
+          git add streak.txt
+          git commit -m "chore: auto streak update" || exit 0
+          git push
