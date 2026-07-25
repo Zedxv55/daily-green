@@ -2,16 +2,21 @@ name: Daily Auto Commit
 
 on:
   schedule:
-    # รันอัตโนมัติทุกๆ 2 ชั่วโมง (ที่นาทีที่ 0 ของชั่วโมงที่ 0, 4, 8, 12, 16, 20 UTC)
+    # รันอัตโนมัติทุกๆ 2 ชั่วโมง
     - cron: '0 */2 * * *'
-  workflow_dispatch: # ปุ่มกดรันเองมือถือ/เว็บบราวเซอร์
+  workflow_dispatch: # ปุ่มกดรันเอง
+
+# 🟢 เพิ่มส่วนนี้: ให้สิทธิ์ Workflow ในการเขียน/Push โค้ดเข้า Repository
+permissions:
+  contents: write
 
 jobs:
   auto-commit:
     runs-on: ubuntu-latest
     steps:
+      # 🟢 อัปเดตเป็น v4
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Update streak file
         run: |
@@ -19,8 +24,11 @@ jobs:
 
       - name: Commit and Push
         run: |
-          git config --global user.name "GitHub Action Bot"
+          # 🟢 เปลี่ยน user.name เป็น Username ของคุณ
+          git config --global user.name "Zedxv55"
+          # 🟢 ตรวจสอบว่า Email นี้ตรงกับที่ผูกในบัญชี GitHub 100%
           git config --global user.email "zeetosit@gmail.com"
+          
           git add streak.txt
           git commit -m "chore: auto streak update" || exit 0
           git push
