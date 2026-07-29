@@ -2,8 +2,8 @@ name: Daily Auto Commit
 
 on:
   schedule:
-    # รันอัตโนมัติทุกๆ 2 ชั่วโมง
-    - cron: '0 */2 * * *'
+    # 🟢 รันอัตโนมัติทุกๆ 30 นาที
+    - cron: '*/30 * * * *'
   workflow_dispatch: # ปุ่มกดรันเอง
 
 # 🟢 เพิ่มส่วนนี้: ให้สิทธิ์ Workflow ในการเขียน/Push โค้ดเข้า Repository
